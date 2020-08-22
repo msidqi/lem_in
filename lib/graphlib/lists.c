@@ -12,15 +12,14 @@ t_list	*lst_new(void *content, size_t size)
 	return (new_node);
 }
 
-void	lst_del_one(t_list *node)
+void	lst_del_one(t_list **node)
 {
-	if (!node)
+	if (!node || !(*node))
 		return ;
-	if (node->content)
-		free(node->content);
-	node->content = NULL;
-	node->size = 0;
-	free(node);
+	if ((*node)->content)
+		free((*node)->content);
+	free(*node);
+	*node = NULL;
 }
 
 void	lst_del_content(t_list *node)
@@ -112,4 +111,23 @@ size_t lst_len(t_list *head)
 		head = head->next;
 	}
 	return (i);
+}
+
+t_list *lst_get_index(t_list *head, int index)
+{
+	int		i;
+	t_list	*iter;
+
+	if (index < 0)
+		return (NULL);
+	i = 0;
+	iter = head;
+	while (iter)
+	{
+		if (i == index)
+			return (iter);
+		iter = iter->next;
+		i++;
+	}
+	return (NULL);
 }

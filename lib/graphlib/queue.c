@@ -1,15 +1,6 @@
 #include "stacks_queues.h"
 
-t_list	*queue_enqueue_new(t_queue *q, void *content, size_t size)
-{
-	t_list *new_node;
-	
-	new_node = lst_new(content, size);
-	queue_enqueue(q, new_node);
-	return (new_node);
-}
-
-void	queue_enqueue(t_queue *q, t_list *node)
+static void		queue_enqueue(t_queue *q, t_list *node)
 {
 	if (!q->_first || !q->_last)
 	{
@@ -23,7 +14,16 @@ void	queue_enqueue(t_queue *q, t_list *node)
 	}
 }
 
-t_list	*queue_dequeue(t_queue *q)
+static t_list	*queue_enqueue_new(t_queue *q, void *content, size_t size)
+{
+	t_list *new_node;
+	
+	new_node = lst_new(content, size);
+	queue_enqueue(q, new_node);
+	return (new_node);
+}
+
+static t_list	*queue_dequeue(t_queue *q)
 {
 	t_list *node;
 
@@ -41,14 +41,14 @@ t_list	*queue_dequeue(t_queue *q)
 	return (node);
 }
 
-size_t	queue_len(t_queue *q)
+static size_t	queue_len(t_queue *q)
 {
 	if (!q)
 		return (0);
 	return (lst_len(q->_first));
 }
 
-t_queue	queue_create()
+t_queue			queue_create()
 {
 	t_queue q;
 

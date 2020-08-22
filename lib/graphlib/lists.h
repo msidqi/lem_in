@@ -17,8 +17,9 @@ void	lst_push(t_list **head, t_list *node);
 t_list	*lst_pop(t_list **head);
 void	lst_enqueue(t_list **head, t_list *last);
 t_list	*lst_dequeue(t_list **head);
-void	lst_del_one(t_list *node);
+void	lst_del_one(t_list **node);
 void	lst_del_content(t_list *node);
 size_t	lst_len(t_list *head);
+t_list *lst_get_index(t_list *head, int index);
 
 #endif
