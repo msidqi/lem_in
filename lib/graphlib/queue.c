@@ -2,7 +2,7 @@
 
 static void		queue_enqueue(t_queue *q, t_list *node)
 {
-	if (!q->_first || !q->_last)
+	if (!q->_first)
 	{
 		q->_first = node;
 		q->_last = node;
