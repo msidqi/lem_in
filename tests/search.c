@@ -11,7 +11,7 @@ int *fill_content_int(int n)
 
 int main(void)
 {
-	t_graph *gnode[7];
+	t_gnode *gnode[7];
 
 	gnode[0] = gnode_new(fill_content_int(0), sizeof(int));
 	gnode[1] = gnode_new(fill_content_int(1), sizeof(int));
