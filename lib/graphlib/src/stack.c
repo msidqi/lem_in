@@ -6,14 +6,17 @@ t_list	*stack_pop(t_stack *s)
 	return (lst_pop(&s->_first));	
 }
 
-void		stack_push(t_stack *s, t_list *to_push)
+void	stack_push(t_stack *s, t_list *to_push)
 {
 	lst_push(&s->_first, to_push);
 }
 
 t_list	*stack_push_new(t_stack *s, void *content, size_t size)
 {
-	t_list	*new_node = lst_new(content, size);
+	t_list	*new_node;
+
+	if (!(new_node = lst_new(content, size)))
+		return (NULL);
 	lst_push(&s->_first, new_node);
 	return (new_node);
 }
@@ -29,14 +32,14 @@ int  	stack_is_empty(t_stack *s)
 {
 	if (!s || !s->_first)
 		return (1);
-    return (0);
+	return (0);
 }
 
 t_stack			stack_create()
 {
 	t_stack s;
 
-    // s.is_empty = stack_is_empty;
+	// s.is_empty = stack_is_empty;
 	// s.len = stack_len;
 	// s.push = stack_push;
 	// s.pop = stack_pop;
@@ -49,7 +52,8 @@ t_stack			*stack_new()
 {
 	t_stack *s;
 
-    s = (t_stack *)malloc(sizeof(t_stack));
+	if (!(s = (t_stack *)malloc(sizeof(t_stack))))
+		return (NULL);
 	s->_first = NULL;
 	return (s);
 }

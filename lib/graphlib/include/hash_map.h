@@ -11,17 +11,16 @@
 typedef struct		s_map_elem
 {
 	void			*content;
-	void			*size;
+	char			*key;
 }					t_map_elem;
 
 typedef struct		s_map
 {
 	size_t			_len;
 	size_t			n_elem;
-	t_list			*map;
 	t_queue			*map_array;
 	size_t			(*_hash_func)(struct s_map *m, char *key);
-	void			(*insert)(struct s_map *m, char* key, void *content, size_t);
+	int 			(*insert)(struct s_map *m, char* key, void *content, size_t);
 	void			*(*get)(struct s_map *m, char *key);
 	void			(*remove)(struct s_map *m, char *key);
 	void			*(*extract)(struct s_map *m, char *key);

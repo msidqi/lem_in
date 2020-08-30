@@ -17,8 +17,9 @@ void		queue_enqueue(t_queue *q, t_list *node)
 t_list	*queue_enqueue_new(t_queue *q, void *content, size_t size)
 {
 	t_list *new_node;
-	
-	new_node = lst_new(content, size);
+
+	if (!(new_node = lst_new(content, size)))
+		return (NULL);
 	queue_enqueue(q, new_node);
 	return (new_node);
 }
@@ -43,19 +44,19 @@ t_list	*queue_dequeue(t_queue *q)
 
 size_t	queue_len(t_queue *q)
 {
-    return (!q ? 0 : lst_len(q->_first));
+	return (!q ? 0 : lst_len(q->_first));
 }
 
 int  	queue_is_empty(t_queue *q)
 {
-    return ((!q || !q->_first) ? 1 : 0);
+	return ((!q || !q->_first) ? 1 : 0);
 }
 
 t_queue			queue_create()
 {
 	t_queue q;
 
-    // q.is_empty = queue_is_empty;
+	// q.is_empty = queue_is_empty;
 	// q.len = queue_len;
 	// q.dequeue = queue_dequeue;
 	// q.enqueue = queue_enqueue;
@@ -69,7 +70,8 @@ t_queue			*queue_new()
 {
 	t_queue *q;
 
-    q = (t_queue *)malloc(sizeof(t_queue));
+	if (!(q = (t_queue *)malloc(sizeof(t_queue))))
+		return (NULL);
 	q->_first = NULL;
 	q->_last = NULL;
 	return (q);
