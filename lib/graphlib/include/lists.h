@@ -21,5 +21,6 @@ void	lst_del_one(t_list **node);
 void	lst_del_content(t_list *node);
 size_t	lst_len(t_list *head);
 t_list *lst_get_index(t_list *head, int index);
+void    lst_iter(t_list *lst, void (*f)(t_list *elem));
 
 #endif

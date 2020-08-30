@@ -131,3 +131,12 @@ t_list *lst_get_index(t_list *head, int index)
 	}
 	return (NULL);
 }
+
+void    lst_iter(t_list *lst, void (*f)(t_list *elem))
+{
+    while (lst != NULL)
+    {
+        f(lst);
+        lst = lst->next;
+    }
+}
