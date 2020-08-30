@@ -12,6 +12,7 @@ typedef struct	s_queue
 	void		(*enqueue)(struct s_queue *q, t_list *node);
 	t_list		*(*enqueue_new)(struct s_queue *q, void *content, size_t size);
 	t_list		*(*dequeue)(struct s_queue *q);
+    int  	    (*is_empty)(struct s_queue *q);
 	// t_list		*(*index)(struct s_queue *q, int index);
 
 }				t_queue;
@@ -23,6 +24,7 @@ typedef struct	s_stack
 	void		(*push)(struct s_stack *s, t_list *node);
 	t_list		*(*push_new)(struct s_stack *s, void *content, size_t size);
 	t_list		*(*pop)(struct s_stack *s);
+    int  	    (*is_empty)(struct s_stack *s);
 	// t_list		*(*index)(struct s_stack *s, int index);
 
 }				t_stack;

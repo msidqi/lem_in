@@ -25,10 +25,18 @@ static size_t	stack_len(t_stack *s)
 	return (lst_len(s->_first));
 }
 
+static int  	stack_is_empty(t_stack *s)
+{
+	if (!s || !s->_first)
+		return (1);
+    return (0);
+}
+
 t_stack			stack_create()
 {
 	t_stack s;
 
+    s.is_empty = stack_is_empty;
 	s.len = stack_len;
 	s.push = stack_push;
 	s.pop = stack_pop;

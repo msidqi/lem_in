@@ -48,10 +48,18 @@ static size_t	queue_len(t_queue *q)
 	return (lst_len(q->_first));
 }
 
+static int  	queue_is_empty(t_queue *q)
+{
+	if (!q || !q->_first)
+		return (1);
+    return (0);
+}
+
 t_queue			queue_create()
 {
 	t_queue q;
 
+    q.is_empty = queue_is_empty;
 	q.len = queue_len;
 	q.dequeue = queue_dequeue;
 	q.enqueue = queue_enqueue;
