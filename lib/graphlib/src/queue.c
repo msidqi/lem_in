@@ -1,6 +1,6 @@
 #include "stacks_queues.h"
 
-static void		queue_enqueue(t_queue *q, t_list *node)
+void		queue_enqueue(t_queue *q, t_list *node)
 {
 	if (!q->_first)
 	{
@@ -14,7 +14,7 @@ static void		queue_enqueue(t_queue *q, t_list *node)
 	}
 }
 
-static t_list	*queue_enqueue_new(t_queue *q, void *content, size_t size)
+t_list	*queue_enqueue_new(t_queue *q, void *content, size_t size)
 {
 	t_list *new_node;
 	
@@ -23,7 +23,7 @@ static t_list	*queue_enqueue_new(t_queue *q, void *content, size_t size)
 	return (new_node);
 }
 
-static t_list	*queue_dequeue(t_queue *q)
+t_list	*queue_dequeue(t_queue *q)
 {
 	t_list *node;
 
@@ -41,30 +41,36 @@ static t_list	*queue_dequeue(t_queue *q)
 	return (node);
 }
 
-static size_t	queue_len(t_queue *q)
+size_t	queue_len(t_queue *q)
 {
-	if (!q)
-		return (0);
-	return (lst_len(q->_first));
+    return (!q ? 0 : lst_len(q->_first));
 }
 
-static int  	queue_is_empty(t_queue *q)
+int  	queue_is_empty(t_queue *q)
 {
-	if (!q || !q->_first)
-		return (1);
-    return (0);
+    return ((!q || !q->_first) ? 1 : 0);
 }
 
 t_queue			queue_create()
 {
 	t_queue q;
 
-    q.is_empty = queue_is_empty;
-	q.len = queue_len;
-	q.dequeue = queue_dequeue;
-	q.enqueue = queue_enqueue;
-	q.enqueue_new = queue_enqueue_new;
+    // q.is_empty = queue_is_empty;
+	// q.len = queue_len;
+	// q.dequeue = queue_dequeue;
+	// q.enqueue = queue_enqueue;
+	// q.enqueue_new = queue_enqueue_new;
 	q._last = NULL;
 	q._first = NULL;
+	return (q);
+}
+
+t_queue			*queue_new()
+{
+	t_queue *q;
+
+    q = (t_queue *)malloc(sizeof(t_queue));
+	q->_first = NULL;
+	q->_last = NULL;
 	return (q);
 }

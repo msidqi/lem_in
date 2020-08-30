@@ -12,6 +12,11 @@ static size_t	default_hash_func(t_map *map, char *key)
 	return (total % map->_len);
 }
 
+static int      map_is_empty(t_map *m)
+{
+    return ((!m || m->n_elem == 0) ? 1 : 0);
+}
+
 static void		map_insert(t_map *m, char* key, void *content, size_t s)
 {
 	size_t index;
@@ -39,7 +44,7 @@ t_map			map_create(size_t (*hash_func)(t_map *, char *), size_t map_len)
 
 	m._hash_func = hash_func ? hash_func : default_hash_func;
 	m.n_elem = 0;
-	// m.is_empty = map_is_empty;
+	m.is_empty = map_is_empty;
 	// m.remove = map_remove;
 	m.insert = map_insert;
 	// m.extract = map_extract;
