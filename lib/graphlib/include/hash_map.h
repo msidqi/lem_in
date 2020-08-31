@@ -6,7 +6,7 @@
 # include "lists.h"
 # include "stacks_queues.h"
 
-# define DEFAULT_MAP_LEN 100
+# define DEFAULT_MAP_ARRAY_LEN 100
 
 typedef struct		s_map_elem
 {
@@ -24,8 +24,8 @@ typedef struct		s_map
 	int 			(*insert)(struct s_map *m, char* key, void *content, size_t);
 	void 			*(*insert_replace)(struct s_map *m, char* key, void *content, size_t);
 	void			*(*get)(struct s_map *m, char *key);
-	void			(*remove)(struct s_map *m, char *key);
 	void			*(*extract)(struct s_map *m, char *key);
+	void			(*del)(struct s_map *m, char *key);
 	int				(*exists)(struct s_map *m, char *key);
 	int				(*is_empty)(struct s_map *m);
 }					t_map;
