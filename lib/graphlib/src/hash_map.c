@@ -29,7 +29,7 @@ static void			map_elem_del(t_map_elem **e)
 	*e = NULL;
 }
 
-static t_map_elem	*map_elem_new(char* key, void *content)
+static t_map_elem	*map_elem_new(char* key, void *content, size_t s)
 {
 	t_map_elem *e;
 	size_t key_len;
@@ -43,19 +43,20 @@ static t_map_elem	*map_elem_new(char* key, void *content)
 		return (NULL);
 	}
 	e->content = content;
+	e->size = s;
 	strncpy(e->key, key, key_len + 1);
 	return (e);
 }
 
 static int		map_insert(t_map *m, char* key, void *content, size_t s)
 {
-	size_t index;
-	t_map_elem *e;
+	size_t		index;
+	t_map_elem	*e;
 
 	index = m->_hash_func(m, key);
-	if (!(e = map_elem_new(key, content)))
+	if (!(e = map_elem_new(key, content, s)))
 		return (0);
-	if (!queue_enqueue_new(&m->map_array[index], e, s))
+	if (!queue_enqueue_new(&m->map_array[index], e, sizeof(t_map_elem)))
 	{
 		free(e->key);
 		free(e);
@@ -63,6 +64,38 @@ static int		map_insert(t_map *m, char* key, void *content, size_t s)
 	}
 	m->n_elem++;
 	return (1);
+}
+
+static void		*map_insert_and_replace(t_map *m, char* key, void *content, size_t s)
+{
+	size_t		index;
+	t_map_elem	*e;
+	t_list		*iterator;
+	void		*old_content;
+
+	index = m->_hash_func(m, key);
+	iterator = m->map_array[index]._first;
+	while (iterator)
+	{
+		if (!strcmp(((t_map_elem *)iterator->content)->key, key))
+		{
+			old_content = ((t_map_elem *)iterator->content)->content;
+			((t_map_elem *)iterator->content)->content = content;
+			((t_map_elem *)iterator->content)->size = s;
+			return (old_content);
+		}
+		iterator = iterator->next;
+	}
+	if (!(e = map_elem_new(key, content, s)))
+		return (NULL);
+	if (!queue_enqueue_new(&m->map_array[index], e, sizeof(t_map_elem)))
+	{
+		free(e->key);
+		free(e);
+		return (NULL);
+	}
+	m->n_elem++;
+	return (content);
 }
 
 t_map			map_create(size_t (*hash_func)(t_map *, char *), size_t map_len)
@@ -77,6 +110,7 @@ t_map			map_create(size_t (*hash_func)(t_map *, char *), size_t map_len)
 	m.n_elem = 0;
 	m.is_empty = map_is_empty;
 	m.insert = map_insert;
+	m.insert_replace = map_insert_and_replace;
 	// m.remove = map_remove;
 	// m.extract = map_extract;
 	// m.exists = map_key_exists;

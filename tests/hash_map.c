@@ -3,7 +3,7 @@
 
 void print_element(t_list *l)
 {
-    printf("key (%s) is full | (%s)\n",
+    printf("    key (%s) is full | (%s)\n",
     ((t_map_elem *)l->content)->key,
     (char *)((t_map_elem *)l->content)->content);
 }
@@ -23,26 +23,17 @@ int main(void)
 
     m.insert(&m, "second_key", string[1], strlen(string[1]) + 1);
 
-    m.insert(&m, "third_key", str, sizeof(str));
+    m.insert(&m, "second_key", str, sizeof(str));
 
     for (int i = 0; i < m._len; i++)
     {
         map_array_len++;
         if (!queue_is_empty(&m.map_array[i]))
         {
-            printf("index %d : ", i);
+            printf("index %d : \n", i);
             lst_iter(m.map_array[i]._first, print_element);
         }
     }
-
-    for (int i = 0; i < m._len; i++)
-    {
-        if (!queue_is_empty(&m.map_array[i]))
-        {
-            printf("index %d : ", i);
-            lst_iter(m.map_array[i]._first, print_element);
-        }
-    }    
     printf("-----------------\n"
     "map_array_len %zu == %zu | number of inserted elements %zu\n",
     map_array_len, m._len, m.n_elem);
